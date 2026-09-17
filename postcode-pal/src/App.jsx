@@ -129,10 +129,6 @@ export default function ZipBusinessLookup() {
     }
   }
 
-  function handlePrint() {
-    window.print();
-  }
-
   function handleExportExcel() {
     if (!result) return;
 
@@ -297,16 +293,6 @@ export default function ZipBusinessLookup() {
               >
                 <Typography variant="h6">ZIPCODE breakdown</Typography>
                 <span>
-                  <Tooltip title="Print">
-                    <Button
-                      size="small"
-                      startIcon={<FileDownloadIcon />}
-                      onClick={handlePrint}
-                      disabled={rows.length === 0}
-                    >
-                      Print
-                    </Button>
-                  </Tooltip>
                   <Tooltip title="Export to Excel">
                     <Button
                       size="small"
@@ -337,8 +323,12 @@ export default function ZipBusinessLookup() {
                 </span>
               </Stack>
 
-              <TableContainer component={Paper} variant="outlined">
-                <Table size="small">
+              <TableContainer
+                component={Paper}
+                variant="outlined"
+                sx={{ maxHeight: 400, overflowY: "auto" }}
+              >
+                <Table size="small" stickyHeader>
                   <TableHead>
                     <TableRow>
                       <TableCell sx={codeSx}>ZIPCODE+4</TableCell>

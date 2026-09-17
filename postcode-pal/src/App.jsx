@@ -63,7 +63,6 @@ const codeSx = {
 
 export default function ZipBusinessLookup() {
   const [apiKey, setApiKey] = useState("");
-  const [showKey, setShowKey] = useState(true);
   const [zip, setZip] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -224,7 +223,7 @@ export default function ZipBusinessLookup() {
                   label="Melissa License Key"
                   value={apiKey}
                   onChange={(e) => setApiKey(e.target.value)}
-                  type={showKey ? "text" : "password"}
+                  showKey={true}
                   fullWidth
                   size="small"
                 />
@@ -296,11 +295,9 @@ export default function ZipBusinessLookup() {
                 sx={{ mb: 1 }}
                 className="no-print"
               >
-                <Typography variant="h6">
-                  ZIPCODE breakdown ({rows.length})
-                </Typography>
-                <Tooltip title="Print">
-                  <span>
+                <Typography variant="h6">ZIPCODE breakdown</Typography>
+                <span>
+                  <Tooltip title="Print">
                     <Button
                       size="small"
                       startIcon={<FileDownloadIcon />}
@@ -309,14 +306,19 @@ export default function ZipBusinessLookup() {
                     >
                       Print
                     </Button>
+                  </Tooltip>
+                  <Tooltip title="Export to Excel">
                     <Button
                       size="small"
                       onClick={handleExportExcel}
                       disabled={rows.length === 0}
+                      startIcon={<FileDownloadIcon />}
                       className="no-print"
                     >
                       Export Excel
                     </Button>
+                  </Tooltip>
+                  <Tooltip title="Export to CSV">
                     <Button
                       size="small"
                       onClick={() =>
@@ -326,12 +328,13 @@ export default function ZipBusinessLookup() {
                         )
                       }
                       disabled={rows.length === 0}
+                      startIcon={<FileDownloadIcon />}
                       className="no-print"
                     >
                       Export CSV
                     </Button>
-                  </span>
-                </Tooltip>
+                  </Tooltip>
+                </span>
               </Stack>
 
               <TableContainer component={Paper} variant="outlined">

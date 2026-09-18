@@ -194,7 +194,7 @@ export default function ZipBusinessLookup() {
         <Toolbar>
           <MarkunreadMailboxIcon sx={{ mr: 1.5 }} />
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Melissa ZIP Business Lookup
+            Postcode Pal
           </Typography>
         </Toolbar>
       </AppBar>

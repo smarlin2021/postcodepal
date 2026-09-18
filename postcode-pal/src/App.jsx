@@ -133,7 +133,7 @@ export default function ZipBusinessLookup() {
     } catch (err) {
       setError(
         err instanceof TypeError
-          ? "Network request was blocked (likely CORS). Route this through a backend proxy — see the setup note above."
+          ? "Network request was blocked (likely CORS)."
           : err.message || "Something went wrong looking up that ZIP code.",
       );
     } finally {

@@ -101,10 +101,22 @@ export default function ZipBusinessLookup() {
       const streetList = business?.CountDetails?.StreetRange?.Street ?? [];
       const list = Array.isArray(streetList) ? streetList : [streetList];
 
-      const parsedRows = list.filter(Boolean).map((item) => ({
-        geography: item.Geography,
-        count: Number(item.Count ?? 0),
-      }));
+      const parsedRows = list
+        .filter((item) => item && item.Geography) // drop Melissa's placeholder {StartNumber, EndNumber} object
+        .map((item) => ({
+          geography: item.Geography,
+          count: Number(item.Count ?? 0),
+        }));
+
+      const zipNotFound = totalCount === 0;
+
+      if (zipNotFound) {
+        setError(
+          `ZIP code ${zip.trim()} doesn't appear to exist or has no business data on file. Double-check the ZIP code and try again.`,
+        );
+        setResult(null);
+        return;
+      }
 
       if (statusCode !== "Approved") {
         setError(
@@ -213,13 +225,13 @@ export default function ZipBusinessLookup() {
               <Stack
                 direction={{ xs: "column", sm: "row" }}
                 spacing={2}
-                alignItems={{ sm: "flex-start" }}
+                align-items={{ sm: "flex-start" }}
               >
                 <TextField
                   label="Melissa License Key"
                   value={apiKey}
                   onChange={(e) => setApiKey(e.target.value)}
-                  showKey={true}
+                  showkey="true"
                   fullWidth
                   size="small"
                 />
@@ -232,7 +244,7 @@ export default function ZipBusinessLookup() {
                   placeholder="30090"
                   size="small"
                   sx={{ minWidth: { sm: 160 } }}
-                  inputProps={{ inputMode: "numeric", maxLength: 5 }}
+                  inputprops={{ inputMode: "numeric", maxLength: 5 }}
                 />
                 <Button
                   type="submit"
@@ -258,8 +270,8 @@ export default function ZipBusinessLookup() {
                 <CardContent>
                   <Stack
                     direction={{ xs: "column", sm: "row" }}
-                    justifyContent="space-between"
-                    alignItems={{ sm: "center" }}
+                    justify-content="space-between"
+                    align-items={{ sm: "center" }}
                     spacing={1}
                   >
                     <Box>
@@ -286,8 +298,8 @@ export default function ZipBusinessLookup() {
 
               <Stack
                 direction="row"
-                justifyContent="space-between"
-                alignItems="center"
+                justify-content="space-between"
+                align-items="center"
                 sx={{ mb: 1 }}
                 className="no-print"
               >
@@ -343,8 +355,8 @@ export default function ZipBusinessLookup() {
                           direction="row"
                           spacing={0.5}
                           display="flex"
-                          justifyContent="center"
-                          alignItems="center"
+                          justify-content="center"
+                          align-items="center"
                         >
                           <span>Business count</span>
                           {sortDir === "desc" ? (
